@@ -5,12 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Premium Bootstrap 5 Landing Template" />
-    <meta name="keywords" content="agency, bootstrap, business, corporate, creative, landing page, marketing, multipurpose, product, product launch, responsive, software, startup, startup landing page" />
-    <meta name="author" content="ThemesBoss" />
+    <meta name="description" content=" Sistem Informasi Pendaftaraan Anggota Baru Komunitas Mahasiwa Pelajar Puncak" />
+    <meta name="keywords" content="Sistem Informasi Pendaftaraan Anggota Baru Komunitas Mahasiwa Pelajar Puncak" />
+    <meta name="author" content="Sistem Informasi Pendaftaraan Anggota Baru Komunitas Mahasiwa Pelajar Puncak" />
 
     <!-- Site Title -->
-    <title>Brezon - Responsive Bootstrap 5 Landing Template</title>
+    <title>
+        Sistem Informasi Pendaftaraan Anggota Baru Komunitas Mahasiwa Pelajar Puncak
+    </title>
 
     <!-- Site favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -48,28 +50,19 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto navbar-center" id="mySidenav">
                     <li class="nav-item active">
-                        <a href="#home" class="nav-link">Home</a>
+                        <a href="#beranda" class="nav-link">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#features" class="nav-link">Features</a>
+                        <a href="#tentang" class="nav-link">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#services" class="nav-link">Services</a>
+                        <a href="#pendaftaran" class="nav-link">Pendaftaran</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#client" class="nav-link">Client</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#team" class="nav-link">Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#price" class="nav-link">Pricing</a>
+                        <a href="#kontak" class="nav-link">Kontak</a>
                     </li>
                     <li class="nav-item">
                         <a href="#faq" class="nav-link">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#contact" class="nav-link">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -80,12 +73,12 @@
     <!--Start Home-->
     <section class="bg-dark d-flex align-items-center min-vh-100" id="home">
         <div class="bg-overlay"></div>
-        <a id="video" class="youtube-bg" data-property="{videoURL:'https://www.youtube.com/watch?v=QwszX3r3KiM',containment:'#home', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, quality:'default'}"></a>
+        <a id="video" class="youtube-bg" data-property="{videoURL:'https://www.youtube.com/watch?v=mcoiQDC_DhY',containment:'#home', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, quality:'default'}"></a>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="text-white text-center">
-                        <div class="mx-auto">
+                        {{-- <div class="mx-auto">
                             <button type="button" class="play-btn video_play mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="mdi mdi-play text-center"></i>
                             </button>
@@ -105,11 +98,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <h1 class="header_title mb-0 mt-4">We Are Creative Landing Page</h1>
-                        <p class="header_subtitle pt-4 text-white mx-auto">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout readable English.</p>
+                        </div> --}}
+                        <h1 class="header_title mb-0 mt-4">  Bergabunglah Bersama Komunitas Mahasiswa Pelajar Puncak</h1>
+                        <p class="header_subtitle pt-4 text-white mx-auto">Bangun relasi, kembangkan potensi, dan jadilah bagian dari gerakan perubahan positif untuk generasi Puncak.</p>
                         <div class="header_btn">
-                            <a href="javascript:void(0)" class="btn btn-primary rounded-pill mt-4">Let's Get Started</a>
+                            <a href="javascript:void(0)" class="btn btn-primary rounded-pill mt-4">Daftar Sekarang</a>
+                            <a href="javascript:void(0)" class="btn btn-success rounded-pill mt-4">Pelajari Lebih Lanjut</a>
                         </div>
                     </div>
                 </div>
@@ -118,52 +112,13 @@
     </section>
     <!--End Home-->
 
-    <!-- Start Great People -->
-    <section class="section bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="logo_img">
-                        <img src="assets/images/clients/1.png" alt="logo-img" class="mx-auto img-fluid d-block">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="logo_img">
-                        <img src="assets/images/clients/2.png" alt="logo-img" class="mx-auto img-fluid d-block">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="logo_img">
-                        <img src="assets/images/clients/3.png" alt="logo-img" class="mx-auto img-fluid d-block">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="logo_img">
-                        <img src="assets/images/clients/4.png" alt="logo-img" class="mx-auto img-fluid d-block">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="logo_img">
-                        <img src="assets/images/clients/5.png" alt="logo-img" class="mx-auto img-fluid d-block">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="logo_img">
-                        <img src="assets/images/clients/6.png" alt="logo-img" class="mx-auto img-fluid d-block">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Great People -->
-
     <!-- Start Features -->
     <section class="section" id="features">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center">
-                        <h3 class="mb-0 text-capitalize">Best <span class="fw-bold">Features</span></h3>
+                        <h3 class="mb-0 text-capitalize">Tentang <span class="fw-bold">Kami</span></h3>
                         <div class="main-title-border bg-primary  mx-auto"></div>
                         <p class="text-secondary sec_subtitle mx-auto mt-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                     </div>

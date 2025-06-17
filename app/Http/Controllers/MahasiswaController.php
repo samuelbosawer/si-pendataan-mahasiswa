@@ -12,18 +12,32 @@ class MahasiswaController extends Controller
     public function index(Request $request)
     {
 
-        // $datas = Mahasiswa::where([
-        //     ['nama_distrik', '!=', Null],
-        //     [function ($query) use ($request) {
-        //         if (($s = $request->s)) {
-        //             $query->orWhere('nama_distrik', 'LIKE', '%' . $s . '%')
-        //                 ->orWhere('keterangan', 'LIKE', '%' . $s . '%')
-        //                 ->get();
-        //         }
-        //     }]
-        // ])->orderBy('id', 'desc')->paginate(10);
-        return view('admin.mahasiswa.index');
-        // return view('admin.mahasiswa.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
+
+    $datas = Mahasiswa::with(['kampus', 'fakultas', 'jurusan', 'user'])
+        ->where(function ($query) use ($request) {
+            if ($s = $request->s) {
+                $query->Where('angkatan', 'like', '%' . $s . '%')
+                    ->orWhere('asal_kampung', 'like', '%' . $s . '%')
+                    ->orWhere('alamat_distrik', 'like', '%' . $s . '%')
+                    ->orWhere('alamat_jalan', 'like', '%' . $s . '%')
+                    ->orWhere('jenis_kelamin', 'like', '%' . $s . '%')
+                    ->orWhereHas('kampus', function ($q) use ($s) {
+                        $q->where('nama_kampus', 'like', '%' . $s . '%');
+                    })
+                    ->orWhereHas('fakultas', function ($q) use ($s) {
+                        $q->where('nama_fakultas', 'like', '%' . $s . '%');
+                    })
+                    ->orWhereHas('jurusan', function ($q) use ($s) {
+                        $q->where('nama_jurusan', 'like', '%' . $s . '%');
+                    })
+                    ->orWhereHas('user', function ($q) use ($s) {
+                        $q->where('name', 'like', '%' . $s . '%');
+                    });
+            }
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(10);
+        return view('admin.mahasiswa.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
     }
 
     public function create()
