@@ -56,15 +56,15 @@
                                         <tbody>
                                             @forelse ( $datas as $data )
                                             <tr>
-                                                <td>1</td>
-                                                <td> {{ 'Toinus' }}</td>
-                                                <td> {{ '2021' }}</td>
+                                                <td> {{++$i}}</td>
+                                                <td> {{ $data->user->nama }}</td>
+                                                <td> {{ $data->angkatan }}</td>
                                                 <td>
-                                                    {{ 'Universitas Cendrawasih' }}
+                                                    {{ $data->kampus->nama_kampus}}
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="action-btns">
-                                                        <a href="{{route('dashboard.mahasiswa.detail',1)}}" class="action-btn btn-view bs-tooltip me-2"
+                                                        <a href="{{route('dashboard.mahasiswa.detail',$data->id)}}" class="action-btn btn-view bs-tooltip me-2"
                                                             data-toggle="tooltip" data-placement="top" title="Detail">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -76,7 +76,7 @@
                                                                 <circle cx="12" cy="12" r="3"></circle>
                                                             </svg>
                                                         </a>
-                                                        <a href="{{route('dashboard.mahasiswa.ubah',1)}}" class="action-btn btn-edit bs-tooltip me-2"
+                                                        <a href="{{route('dashboard.mahasiswa.ubah',$data->id)}}" class="action-btn btn-edit bs-tooltip me-2"
                                                             data-toggle="tooltip" data-placement="top" title="Ubah">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -89,8 +89,9 @@
                                                             </svg>
                                                         </a>
 
-                                                        <form class="d-inline" action="" method="POST"
-                                                            enctype="multipart/form-data">
+                                                            <form class="d-inline"
+                                                                action="{{ route('dashboard.mahasiswa.hapus', $data->id) }}"
+                                                                method="POST" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button

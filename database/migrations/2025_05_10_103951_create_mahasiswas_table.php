@@ -19,11 +19,8 @@ return new class extends Migration
             $table->string('asal_kampung')->nullable();
             $table->string('angkatan')->nullable();
             $table->string('jurusan')->nullable();
-            $table->string('alamat_distrik')->nullable();
-            $table->string('alamat_jalan')->nullable();
-            $table->string('no_hp')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->string('foto')->nullable();
+            $table->string('alamat')->nullable();
+
 
             // Data orang tua
             $table->string('nama_ayah')->nullable();

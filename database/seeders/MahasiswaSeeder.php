@@ -34,22 +34,15 @@ class MahasiswaSeeder extends Seeder
                 'tanggal_lahir' => Carbon::parse('2000-01-' . rand(1, 28)),
                 'asal_kampung' => 'Kampung Ilaga',
                 'angkatan' => '202' . rand(0, 4),
-                'alamat_distrik' => 'Distrik Ilaga',
-                'alamat_jalan' => 'Jl. Pendidikan No. ' . rand(10, 99),
-                'no_hp' => $user->no_hp,
-                'email' => $user->email,
-                'foto' => 'default.jpg',
-
+                'alamat' => 'Waena',
                 'nama_ayah' => 'Bapak ' . $user->nama,
                 'pekerjaan_ayah' => 'Petani',
                 'nama_ibu' => 'Ibu ' . $user->nama,
                 'pekerjaan_ibu' => 'Ibu Rumah Tangga',
-
                 'kampus_id' => $kampus->id,
                 'fakultas_id' => $fakultas->id,
                 'jurusan_id' => $jurusan->id,
                 'user_id' => $user->id,
-
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

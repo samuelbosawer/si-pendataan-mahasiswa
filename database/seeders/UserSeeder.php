@@ -16,7 +16,6 @@ class UserSeeder extends Seeder
 
         $user = User::create([
             'nama' => 'Admin',
-            'alamat' => 'Sentani',
             'no_hp' => '082198159714',
             'email' => 'admin@gmail.com',
             'password' =>  bcrypt('admin@gmail.com'),
@@ -29,7 +28,6 @@ class UserSeeder extends Seeder
 
         $user = User::create([
             'nama' => 'Samuel Tabuni',
-            'alamat' => 'Sentani',
             'no_hp' => '082198159711',
             'email' => 'samuel@gmail.com',
             'password' =>  bcrypt('samuel@gmail.com'),
@@ -41,7 +39,6 @@ class UserSeeder extends Seeder
 
         $user = User::create([
             'nama' => 'Ketua Komunitas',
-            'alamat' => 'Sentani',
             'no_hp' => '082198159711',
             'email' => 'ketua@gmail.com',
             'password' =>  bcrypt('ketua@gmail.com'),
@@ -67,7 +64,6 @@ class UserSeeder extends Seeder
         foreach ($namaMahasiswa as $i => $nama) {
             $user = User::create([
                 'nama' => $nama,
-                'alamat' => 'Kabupaten Puncak',
                 'no_hp' => '0812' . rand(10000000, 99999999),
                 'email' => strtolower(str_replace(' ', '', $nama)) . '@gmail.com',
                 'password' => bcrypt('password123'),
