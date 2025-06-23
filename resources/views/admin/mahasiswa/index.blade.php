@@ -43,10 +43,11 @@
 
 
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped">
+                                    <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr class="bg-primary text-white">
                                                 <th scope="col " width="5" class="text-light fw-bolder">No</th>
+                                                <th scope="col " class="text-light fw-bolder">Foto</th>
                                                 <th scope="col " class="text-light fw-bolder">Nama Mahasiswa</th>
                                                 <th scope="col " class="text-light fw-bolder">Angkatan</th>
                                                 <th scope="col " class="text-light fw-bolder">Kampus</th>
@@ -57,6 +58,20 @@
                                             @forelse ( $datas as $data )
                                             <tr>
                                                 <td> {{++$i}}</td>
+                                                <td>
+
+                                                        @if (!empty($data->user->foto))
+                                                            <br>
+                                                            <img src="{{ asset($data->user->foto) }}" alt="Foto" class="img-fluid mt-2 p-2 rounded"
+                                                                style="max-height: 50px;">
+                                                            <br>
+                                                        @else
+                                                         <br>
+                                                            <img src="{{ asset('assets/default.png') }}" alt="Foto" class="img-fluid mt-2 p-2 rounded"
+                                                                style="max-height: 50px;">
+                                                            <br>
+                                                        @endif;
+                                                </td>
                                                 <td> {{ $data->user->nama ?? '' }}</td>
                                                 <td> {{ $data->angkatan ?? ''}}</td>
                                                 <td>
