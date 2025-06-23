@@ -34,6 +34,7 @@ class MahasiswaSeeder extends Seeder
                 'tanggal_lahir' => Carbon::parse('2000-01-' . rand(1, 28)),
                 'asal_kampung' => 'Kampung Ilaga',
                 'angkatan' => '202' . rand(0, 4),
+                'nik' => rand(0, 12),
                 'alamat' => 'Waena',
                 'nama_ayah' => 'Bapak ' . $user->nama,
                 'pekerjaan_ayah' => 'Petani',

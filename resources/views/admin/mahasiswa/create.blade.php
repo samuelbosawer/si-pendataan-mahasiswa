@@ -63,7 +63,7 @@
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email <span class="text-danger"> * </span>
                                     </label>
-                                    <input type="text" name="email" @if (Request::segment(3) == 'detail') disabled @endif
+                                    <input type="text" name="email" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah' ) disabled @endif
                                         value="{{ old('email') ?? ($data->user->email ?? '') }}" class="form-control"
                                         id="email">
                                     @if ($errors->has('email'))
@@ -75,11 +75,24 @@
                                 <div class="col-md-6">
                                     <label for="no_hp" class="form-label">No Hp <span class="text-danger"> * </span>
                                     </label>
-                                    <input type="text" name="no_hp" @if (Request::segment(3) == 'detail') disabled @endif
+                                    <input type="text" name="no_hp" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah' )  disabled @endif
                                         value="{{ old('no_hp') ?? ($data->user->no_hp ?? '') }}" class="form-control"
                                         id="no_hp">
                                     @if ($errors->has('no_hp'))
-                                        <label class="text-danger"> {{ $errors->first('email') }}
+                                        <label class="text-danger"> {{ $errors->first('no_hp') }}
+                                        </label>
+                                    @endif
+                                </div>
+
+
+                                  <div class="col-md-6">
+                                    <label for="nik" class="form-label">NIK <span class="text-danger"> * </span>
+                                    </label>
+                                    <input type="text" name="nik" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah' )  disabled @endif
+                                        value="{{ old('nik') ?? ($data->nik ?? '') }}" class="form-control"
+                                        id="nik">
+                                    @if ($errors->has('nik'))
+                                        <label class="text-danger"> {{ $errors->first('nik') }}
                                         </label>
                                     @endif
                                 </div>
@@ -107,6 +120,30 @@
                                             </label>
                                         @endif
                                     </div>
+                                </div>
+
+                                  <div class="col-md-6">
+                                    <label for="tempat_lahir" class="form-label">Tempat Lahir <span class="text-danger">
+                                        </span> </label>
+                                    <input type="text" name="tempat_lahir" @if (Request::segment(3) == 'detail') disabled @endif
+                                        value="{{ old('tempat_lahir') ?? ($data->tempat_lahir ?? '') }}" class="form-control"
+                                        id="tempat_lahir">
+                                    @if ($errors->has('tempat_lahir'))
+                                        <label class="text-danger"> {{ $errors->first('tempat_lahir') }}
+                                        </label>
+                                    @endif
+                                </div>
+
+                                 <div class="col-md-6">
+                                    <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span class="text-danger">
+                                        </span> </label>
+                                    <input type="date" name="tanggal_lahir" @if (Request::segment(3) == 'detail') disabled @endif
+                                        value="{{ old('tanggal_lahir') ?? ($data->tanggal_lahir ?? '') }}" class="form-control"
+                                        id="tanggal_lahir">
+                                    @if ($errors->has('tanggal_lahir'))
+                                        <label class="text-danger"> {{ $errors->first('tanggal_lahir') }}
+                                        </label>
+                                    @endif
                                 </div>
 
 
@@ -422,13 +459,15 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label for="foto" class="form-label">Foto Diri <span class="text-danger"> </span>
                                     </label>
 
-                                    @if (!empty($data->foto))
-                                        <img src="{{ asset($data->foto) }}" alt="Foto" class="img-fluid mt-2"
+                                    @if (!empty($data->user->foto))
+                                        <br>
+                                        <img src="{{ asset($data->user->foto) }}" alt="Foto" class="img-fluid mt-2 p-2 rounded"
                                             style="max-height: 200px;">
+                                           <br>
                                     @endif
 
 
@@ -438,6 +477,28 @@
                                         id="foto">
                                     @if ($errors->has('foto'))
                                         <label class="text-danger"> {{ $errors->first('foto') }}
+                                        </label>
+                                    @endif
+                                </div>
+
+                                    <div class="col-md-8">
+                                    <label for="ktp" class="form-label">KTP <span class="text-danger"> </span>
+                                    </label>
+
+                                    @if (!empty($data->ktp))
+                                        <br>
+                                        <img src="{{ asset($data->ktp) }}" alt="ktp" class="img-fluid mt-2 p-2 rounded"
+                                            style="max-height: 200px;">
+                                           <br>
+                                    @endif
+
+
+                                    <input type="file" name="ktp"
+                                        @if (Request::segment(3) == 'detail') disabled @endif
+                                        value="{{ old('ktp') ?? ($data->ktp ?? '') }}" class="form-control"
+                                        id="ktp">
+                                    @if ($errors->has('ktp'))
+                                        <label class="text-danger"> {{ $errors->first('ktp') }}
                                         </label>
                                     @endif
                                 </div>
@@ -638,6 +699,7 @@
                                 </div>
 
 
+                                @if (Request::segment(3) == 'tambah')
                                 <div class="col-md-12 bg-dark rounded p-2 ">
                                     <span class="text-white fw-bolder">Password Akun</span>
                                 </div>
@@ -668,6 +730,8 @@
                                         </label>
                                     @endif
                                 </div>
+
+                                 @endif
 
 
 

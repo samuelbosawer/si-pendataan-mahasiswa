@@ -63,9 +63,12 @@ class MahasiswaController extends Controller
         $request->validate(
             [
                 'nama' => 'required',
-                'email' => 'required',
-                'no_hp' => 'required',
+                'email' => 'required|unique:users,email|string',
+                'no_hp' => 'required|unique:users,no_hp|numeric',
+                'nik' => 'required|unique:mahasiswas,nik|numeric',
+                // 'ktp' => 'required',
                 'jenis_kelamin' => 'required',
+
                 'asal_kampung' => 'required',
                 'angkatan' => 'required',
                 'nama_ayah' => 'required',
@@ -78,8 +81,18 @@ class MahasiswaController extends Controller
             [
                 'nama.required' => 'Tidak boleh kosong',
                 'email.required' => 'Tidak boleh kosong',
+                'email.unique' => 'Sudah terdaftar',
+                'no_hp.unique' => 'Sudah terdaftar',
                 'no_hp.required' => 'Tidak boleh kosong',
+                'no_hp.numeric' => 'Harus nomor/angka ',
+
+
+                'nik.unique' => 'Sudah terdaftar',
+                'nik.required' => 'Tidak boleh kosong',
+                'nik.numeric' => 'Harus nomor/angka ',
+
                 'jenis_kelamin.required' => 'Tidak boleh kosong',
+                // 'ktp.required' => 'Tidak boleh kosong',
                 'asal_kampung.required' => 'Tidak boleh kosong',
                 'angkatan.required' => 'Tidak boleh kosong',
                 'nama_ayah.required' => 'Tidak boleh kosong',
@@ -91,6 +104,9 @@ class MahasiswaController extends Controller
                 'password_confirmation.same' => 'Password tidak sama',
             ]
         );
+
+
+
 
         $user = new User();
         $user->nama   = $request->nama;
@@ -123,7 +139,21 @@ class MahasiswaController extends Controller
         $data->pekerjaan_ayah   = $request->pekerjaan_ayah;
         $data->nama_ibu   = $request->nama_ibu;
         $data->pekerjaan_ibu   = $request->pekerjaan_ibu;
+        $data->nik   = $request->nik;
+        $data->tanggal_lahir   = $request->tanggal_lahir;
+        $data->tempat_lahir   = $request->tempat_lahir;
         $data->user_id   = $user->id;
+
+         if (isset($request->ktp)) {
+            $fileName = $request->ktp->getClientOriginalName();
+            $path = public_path('gambar/ktp/'. $data->ktp);
+            if (file_exists($path)) {
+                File::delete($path);
+            }
+            $timestamp = now()->timestamp;
+            $data->ktp = 'gambar/ktp/'.$timestamp.'-'.$fileName;
+            $request->ktp->move(public_path('gambar/ktp/'), $timestamp.'-'.$fileName);
+        }
 
         $data->save();
         alert()->success('Berhasil', 'Tambah data berhasil')->autoclose(3000);
@@ -135,45 +165,114 @@ class MahasiswaController extends Controller
         $kampus = Kampus::get();
         $fakultas = Fakultas::get();
         $jurusan = Jurusan::get();
-
-        return view('admin.mahasiswa.create',compact('kampus','fakultas','jurusan'));
+        $data = Mahasiswa::with('user')->where('id', $id)->first();
+        $judul = 'Detail Data Mahasiswa';
+        return view('admin.mahasiswa.create',compact('kampus','fakultas','jurusan','data','judul'));
     }
 
 
     public function edit(string $id)
     {
-        $data = Mahasiswa::where('id',$id)->first();
+        $kampus = Kampus::get();
+        $fakultas = Fakultas::get();
+        $jurusan = Jurusan::get();
+        $data = Mahasiswa::with('user')->where('id', $id)->first();
         $judul = 'Ubah Data Mahasiswa';
-        return view('admin.mahasiswa.create', compact('data','judul'));
+        return view('admin.mahasiswa.create',compact('kampus','fakultas','jurusan','data','judul'));
     }
 
     public function update(Request $request, string $id)
     {
 
-        $request->validate(
+
+         $request->validate(
             [
-                'nama_distrik' => 'required',
-                'geojson' => 'json',
+                'nama' => 'required',
+                'jenis_kelamin' => 'required',
+                'asal_kampung' => 'required',
+                'angkatan' => 'required',
+                'nama_ayah' => 'required',
+                'pekerjaan_ayah' => 'required',
+                'nama_ibu' => 'required',
+                'pekerjaan_ibu' => 'required',
+
             ],
             [
-                'nama_mahasiswa.required' => 'Tidak boleh kosong',
-                'geojson.json' => 'Harus format json',
+                'nama.required' => 'Tidak boleh kosong',
+                'jenis_kelamin.required' => 'Tidak boleh kosong',
+                'asal_kampung.required' => 'Tidak boleh kosong',
+                'angkatan.required' => 'Tidak boleh kosong',
+                'nama_ayah.required' => 'Tidak boleh kosong',
+                'pekerjaan_ayah.required' => 'Tidak boleh kosong',
+                'nama_ibu.required' => 'Tidak boleh kosong',
+                'pekerjaan_ibu.required' => 'Tidak boleh kosong',
+
             ]
         );
+
+
+
+
+
+        $user_id = Mahasiswa::where('id',$id)->first();
+
+
+        $id_user =    $user_id->user_id;
+        $user = User::find($id_user);
+        $user->nama   = $request->nama;
+        $user->jenis_kelamin   = $request->jenis_kelamin;
+        if (isset($request->foto)) {
+            $fileName = $request->foto->getClientOriginalName();
+            $path = public_path('gambar/mahasiswa/'. $user->foto);
+            if (file_exists($path)) {
+                File::delete($path);
+            }
+            $timestamp = now()->timestamp;
+            $user->foto = 'gambar/mahasiswa/'.$timestamp.'-'.$fileName;
+            $request->foto->move(public_path('gambar/mahasiswa/'), $timestamp.'-'.$fileName);
+        }
+
+        $user->update();
+
         $data = Mahasiswa::find($id);
-        $data->nama_distrik   = $request->nama_distrik;
-        $data->keterangan   = $request->keterangan;
-        $data->geojson   = $request->geojson;
+        $data->asal_kampung   = $request->asal_kampung;
+        $data->angkatan   = $request->angkatan;
+        $data->kampus_id   = $request->kampus_id;
+        $data->fakultas_id   = $request->fakultas_id;
+        $data->jurusan_id   = $request->jurusan_id;
+        $data->alamat   = $request->alamat;
+        $data->nama_ayah   = $request->nama_ayah;
+        $data->pekerjaan_ayah   = $request->pekerjaan_ayah;
+        $data->nama_ibu   = $request->nama_ibu;
+        $data->pekerjaan_ibu   = $request->pekerjaan_ibu;
+        $data->tanggal_lahir   = $request->tanggal_lahir;
+        $data->tempat_lahir   = $request->tempat_lahir;
+        if (isset($request->ktp)) {
+            $fileName = $request->ktp->getClientOriginalName();
+            $path = public_path('gambar/ktp/'. $data->ktp);
+            if (file_exists($path)) {
+                File::delete($path);
+            }
+            $timestamp = now()->timestamp;
+            $data->ktp = 'gambar/ktp/'.$timestamp.'-'.$fileName;
+            $request->ktp->move(public_path('gambar/ktp/'), $timestamp.'-'.$fileName);
+        }
 
         $data->update();
         alert()->success('Berhasil', 'Ubah data berhasil')->autoclose(3000);
-        return redirect()->route('dashboard.fakultas');
+        return redirect()->route('dashboard.mahasiswa');
     }
 
 
     public function destroy(string $id)
     {
-        $data = Mahasiswa::find($id);
+        $data = Mahasiswa::with('user')->find($id);
+          if ($data->ktp) {
+            File::delete($data->ktp);
+        }
+            if ($data->user->foto) {
+            File::delete($data->user->foto);
+        }
         $data->delete();
         return redirect()->back();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jurusan;
 use Illuminate\Http\Request;
 
 class JurusanController extends Controller
@@ -9,18 +10,15 @@ class JurusanController extends Controller
     public function index(Request $request)
     {
 
-        // $datas = Mahasiswa::where([
-        //     ['nama_distrik', '!=', Null],
-        //     [function ($query) use ($request) {
-        //         if (($s = $request->s)) {
-        //             $query->orWhere('nama_distrik', 'LIKE', '%' . $s . '%')
-        //                 ->orWhere('keterangan', 'LIKE', '%' . $s . '%')
-        //                 ->get();
-        //         }
-        //     }]
-        // ])->orderBy('id', 'desc')->paginate(10);
-        return view('admin.jurusan.index');
-        // return view('admin.jurusan.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
+        $datas = Jurusan::where(function ($query) use ($request) {
+            if ($s = $request->s) {
+                $query->Where('nama_jurusan', 'like', '%' . $s . '%')
+                    ->orWhere('keterangan', 'like', '%' . $s . '%');
+            }
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(10);
+        return view('admin.jurusan.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
     }
 
     public function create()
@@ -34,37 +32,32 @@ class JurusanController extends Controller
 
         $request->validate(
             [
-                'nama_distrik' => 'required',
-                'geojson' => 'json',
+                'nama_jurusan' => 'required',
             ],
             [
                 'nama_jurusan.required' => 'Tidak boleh kosong',
-                'geojson.json' => 'Harus format json',
             ]
         );
-        $data = new Mahasiswa();
-
-        $data->nama_distrik   = $request->nama_distrik;
+        $data = new Jurusan();
+        $data->nama_jurusan   = $request->nama_jurusan;
         $data->keterangan   = $request->keterangan;
-        $data->geojson   = $request->geojson;
-
         $data->save();
         alert()->success('Berhasil', 'Tambah data berhasil')->autoclose(3000);
-        return redirect()->route('dashboard.mahasiswa');
+        return redirect()->route('dashboard.jurusan');
     }
 
     public function show(string $id)
     {
-        $judul = 'Detail Data Mahasiswa';
-        $data = Mahasiswa::where('id',$id)->first();
+        $judul = 'Detail Data Jurusan';
+        $data = Jurusan::where('id',$id)->first();
         return view('admin.jurusan.create', compact('data','judul'));
     }
 
 
     public function edit(string $id)
     {
-        $data = Mahasiswa::where('id',$id)->first();
-        $judul = 'Ubah Data Mahasiswa';
+        $data = Jurusan::where('id',$id)->first();
+        $judul = 'Ubah Data Jurusan';
         return view('admin.jurusan.create', compact('data','judul'));
     }
 
@@ -73,28 +66,24 @@ class JurusanController extends Controller
 
         $request->validate(
             [
-                'nama_distrik' => 'required',
-                'geojson' => 'json',
+                'nama_jurusan' => 'required',
             ],
             [
                 'nama_jurusan.required' => 'Tidak boleh kosong',
-                'geojson.json' => 'Harus format json',
             ]
         );
-        $data = Mahasiswa::find($id);
-        $data->nama_distrik   = $request->nama_distrik;
+        $data = Jurusan::find($id);
+        $data->nama_jurusan   = $request->nama_jurusan;
         $data->keterangan   = $request->keterangan;
-        $data->geojson   = $request->geojson;
-
         $data->update();
         alert()->success('Berhasil', 'Ubah data berhasil')->autoclose(3000);
-        return redirect()->route('dashboard.fakultas');
+        return redirect()->route('dashboard.jurusan');
     }
 
 
     public function destroy(string $id)
     {
-        $data = Mahasiswa::find($id);
+        $data = Jurusan::find($id);
         $data->delete();
         return redirect()->back();
     }

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('angkatan')->nullable();
             $table->string('jurusan')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('nik')->nullable();
+            $table->string('ktp')->nullable();
 
 
             // Data orang tua

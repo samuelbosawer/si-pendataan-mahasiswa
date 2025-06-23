@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kampus;
 use Illuminate\Http\Request;
+
 
 class KampusController extends Controller
 {
     public function index(Request $request)
     {
 
-        // $datas = Mahasiswa::where([
-        //     ['nama_distrik', '!=', Null],
-        //     [function ($query) use ($request) {
-        //         if (($s = $request->s)) {
-        //             $query->orWhere('nama_distrik', 'LIKE', '%' . $s . '%')
-        //                 ->orWhere('keterangan', 'LIKE', '%' . $s . '%')
-        //                 ->get();
-        //         }
-        //     }]
-        // ])->orderBy('id', 'desc')->paginate(10);
-        return view('admin.kampus.index');
-        // return view('admin.kampus.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
+        $datas = Kampus::where(function ($query) use ($request) {
+            if ($s = $request->s) {
+                $query->Where('nama_kampus', 'like', '%' . $s . '%')
+                    ->orWhere('alamat_kampus', 'like', '%' . $s . '%')
+                    ->orWhere('keterangan', 'like', '%' . $s . '%');
+            }
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(10);
+        return view('admin.kampus.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
     }
 
     public function create()
@@ -34,37 +34,35 @@ class KampusController extends Controller
 
         $request->validate(
             [
-                'nama_distrik' => 'required',
-                'geojson' => 'json',
+                'nama_kampus' => 'required',
             ],
             [
                 'nama_kampus.required' => 'Tidak boleh kosong',
-                'geojson.json' => 'Harus format json',
             ]
         );
-        $data = new Mahasiswa();
+        $data = new Kampus();
 
-        $data->nama_distrik   = $request->nama_distrik;
+        $data->nama_kampus   = $request->nama_kampus;
         $data->keterangan   = $request->keterangan;
-        $data->geojson   = $request->geojson;
+        $data->alamat_kampus   = $request->alamat_kampus;
 
         $data->save();
         alert()->success('Berhasil', 'Tambah data berhasil')->autoclose(3000);
-        return redirect()->route('dashboard.mahasiswa');
+        return redirect()->route('dashboard.kampus');
     }
 
     public function show(string $id)
     {
-        $judul = 'Detail Data Mahasiswa';
-        $data = Mahasiswa::where('id',$id)->first();
+        $judul = 'Detail Data Kampus';
+        $data = Kampus::where('id',$id)->first();
         return view('admin.kampus.create', compact('data','judul'));
     }
 
 
     public function edit(string $id)
     {
-        $data = Mahasiswa::where('id',$id)->first();
-        $judul = 'Ubah Data Mahasiswa';
+        $data = Kampus::where('id',$id)->first();
+        $judul = 'Ubah Data Kampus';
         return view('admin.kampus.create', compact('data','judul'));
     }
 
@@ -73,29 +71,27 @@ class KampusController extends Controller
 
         $request->validate(
             [
-                'nama_distrik' => 'required',
-                'geojson' => 'json',
+                'nama_kampus' => 'required',
             ],
             [
                 'nama_kampus.required' => 'Tidak boleh kosong',
-                'geojson.json' => 'Harus format json',
             ]
         );
-        $data = Mahasiswa::find($id);
-        $data->nama_distrik   = $request->nama_distrik;
+        $data = Kampus::find($id);
+        $data->nama_kampus   = $request->nama_kampus;
         $data->keterangan   = $request->keterangan;
-        $data->geojson   = $request->geojson;
+        $data->alamat_kampus   = $request->alamat_kampus;
 
         $data->update();
         alert()->success('Berhasil', 'Ubah data berhasil')->autoclose(3000);
-        return redirect()->route('dashboard.fakultas');
+        return redirect()->route('dashboard.kampus');
     }
 
 
     public function destroy(string $id)
     {
-        $data = Mahasiswa::find($id);
+        $data = Kampus::find($id);
         $data->delete();
-        return redirect()->back();
+        return redirect()->route('dashboard.kampus');
     }
 }

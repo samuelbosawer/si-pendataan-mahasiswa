@@ -57,10 +57,10 @@
                                             @forelse ( $datas as $data )
                                             <tr>
                                                 <td> {{++$i}}</td>
-                                                <td> {{ $data->user->nama }}</td>
-                                                <td> {{ $data->angkatan }}</td>
+                                                <td> {{ $data->user->nama ?? '' }}</td>
+                                                <td> {{ $data->angkatan ?? ''}}</td>
                                                 <td>
-                                                    {{ $data->kampus->nama_kampus}}
+                                                    {{ $data->kampus->nama_kampus ?? ''}}
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="action-btns">

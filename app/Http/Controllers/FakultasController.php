@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
 use Illuminate\Http\Request;
 
 class FakultasController extends Controller
@@ -9,18 +10,15 @@ class FakultasController extends Controller
     public function index(Request $request)
     {
 
-        // $datas = Mahasiswa::where([
-        //     ['nama_distrik', '!=', Null],
-        //     [function ($query) use ($request) {
-        //         if (($s = $request->s)) {
-        //             $query->orWhere('nama_distrik', 'LIKE', '%' . $s . '%')
-        //                 ->orWhere('keterangan', 'LIKE', '%' . $s . '%')
-        //                 ->get();
-        //         }
-        //     }]
-        // ])->orderBy('id', 'desc')->paginate(10);
-        return view('admin.fakultas.index');
-        // return view('admin.fakultas.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
+      $datas = Fakultas::where(function ($query) use ($request) {
+            if ($s = $request->s) {
+                $query->Where('nama_fakultas', 'like', '%' . $s . '%')
+                    ->orWhere('keterangan', 'like', '%' . $s . '%');
+            }
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(10);
+        return view('admin.fakultas.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
     }
 
     public function create()
@@ -34,37 +32,33 @@ class FakultasController extends Controller
 
         $request->validate(
             [
-                'nama_distrik' => 'required',
-                'geojson' => 'json',
+                'nama_fakultas' => 'required',
             ],
             [
                 'nama_fakultas.required' => 'Tidak boleh kosong',
-                'geojson.json' => 'Harus format json',
             ]
         );
-        $data = new Mahasiswa();
+        $data = new Fakultas();
 
-        $data->nama_distrik   = $request->nama_distrik;
+        $data->nama_fakultas   = $request->nama_fakultas;
         $data->keterangan   = $request->keterangan;
-        $data->geojson   = $request->geojson;
-
         $data->save();
         alert()->success('Berhasil', 'Tambah data berhasil')->autoclose(3000);
-        return redirect()->route('dashboard.mahasiswa');
+        return redirect()->route('dashboard.fakultas');
     }
 
     public function show(string $id)
     {
-        $judul = 'Detail Data Mahasiswa';
-        $data = Mahasiswa::where('id',$id)->first();
+        $judul = 'Detail Data Fakultas';
+        $data = Fakultas::where('id',$id)->first();
         return view('admin.fakultas.create', compact('data','judul'));
     }
 
 
     public function edit(string $id)
     {
-        $data = Mahasiswa::where('id',$id)->first();
-        $judul = 'Ubah Data Mahasiswa';
+        $judul = 'Ubah Data Fakultas';
+        $data = Fakultas::where('id',$id)->first();
         return view('admin.fakultas.create', compact('data','judul'));
     }
 
@@ -73,19 +67,15 @@ class FakultasController extends Controller
 
         $request->validate(
             [
-                'nama_distrik' => 'required',
-                'geojson' => 'json',
+                'nama_fakultas' => 'required',
             ],
             [
                 'nama_fakultas.required' => 'Tidak boleh kosong',
-                'geojson.json' => 'Harus format json',
             ]
         );
-        $data = Mahasiswa::find($id);
-        $data->nama_distrik   = $request->nama_distrik;
+        $data = Fakultas::find($id);
+        $data->nama_fakultas   = $request->nama_fakultas;
         $data->keterangan   = $request->keterangan;
-        $data->geojson   = $request->geojson;
-
         $data->update();
         alert()->success('Berhasil', 'Ubah data berhasil')->autoclose(3000);
         return redirect()->route('dashboard.fakultas');
@@ -94,7 +84,7 @@ class FakultasController extends Controller
 
     public function destroy(string $id)
     {
-        $data = Mahasiswa::find($id);
+        $data = Fakultas::find($id);
         $data->delete();
         return redirect()->back();
     }

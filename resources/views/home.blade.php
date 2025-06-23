@@ -64,6 +64,9 @@
                     <li class="nav-item">
                         <a href="#faq" class="nav-link">FAQ</a>
                     </li>
+                      <li class="nav-item">
+                        <a href="{{route('login')}}" class="nav-link">Login</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,6 +1,6 @@
 @extends('admin.layout.tamplate')
 @section('title')
-    Mahasiswa - Admin
+    Jurusan - Admin
 @endsection
 @section('content')
     <!--  BEGIN CONTENT AREA  -->
@@ -16,14 +16,8 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 p-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="9" cy="7" r="4"></circle>
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                        </svg> Data Mahasiswa</h4>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                        </svg> Data Jurusan</h4>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +27,7 @@
 
                                 <div class="d-flex justify-content-between">
                                     <div class="col-6">
-                                        <a href="{{ route('dashboard.mahasiswa.tambah') }}" class="btn btn-primary"> Tambah
+                                        <a href="{{ route('dashboard.jurusan.tambah') }}" class="btn btn-primary"> Tambah
                                             Data </a>
                                     </div>
                                     <div class="col-6">
@@ -47,23 +41,20 @@
                                         <thead>
                                             <tr class="bg-primary text-white">
                                                 <th scope="col " width="5" class="text-light fw-bolder">No</th>
-                                                <th scope="col " class="text-light fw-bolder">Nama Mahasiswa</th>
-                                                <th scope="col " class="text-light fw-bolder">Angkatan</th>
-                                                <th scope="col " class="text-light fw-bolder">Kampus</th>
+                                                <th scope="col " class="text-light fw-bolder">Nama Jurusan</th>
+                                                <th scope="col " class="text-light fw-bolder">Keterangan</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse ( $datas as $data )
                                             <tr>
-                                                <td>1</td>
-                                                <td> {{ 'Toinus' }}</td>
-                                                <td> {{ '2021' }}</td>
-                                                <td>
-                                                    {{ 'Universitas Cendrawasih' }}
-                                                </td>
+                                                <td> {{++$i}}</td>
+                                                <td> {{ $data->nama_jurusan}}</td>
+                                                <td> {{ $data->keterangan }}</td>
                                                 <td class="text-center">
                                                     <div class="action-btns">
-                                                        <a href="{{route('dashboard.mahasiswa.detail',1)}}" class="action-btn btn-view bs-tooltip me-2"
+                                                        <a href="{{route('dashboard.jurusan.detail',$data->id)}}" class="action-btn btn-view bs-tooltip me-2"
                                                             data-toggle="tooltip" data-placement="top" title="Detail">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -75,7 +66,7 @@
                                                                 <circle cx="12" cy="12" r="3"></circle>
                                                             </svg>
                                                         </a>
-                                                        <a href="{{route('dashboard.mahasiswa.ubah',1)}}" class="action-btn btn-edit bs-tooltip me-2"
+                                                        <a href="{{route('dashboard.jurusan.ubah',$data->id)}}" class="action-btn btn-edit bs-tooltip me-2"
                                                             data-toggle="tooltip" data-placement="top" title="Ubah">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -88,8 +79,9 @@
                                                             </svg>
                                                         </a>
 
-                                                        <form class="d-inline" action="" method="POST"
-                                                            enctype="multipart/form-data">
+                                                            <form class="d-inline"
+                                                                action="{{ route('dashboard.jurusan.hapus', $data->id) }}"
+                                                                method="POST" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button
@@ -121,19 +113,19 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            {{-- @empty --}}
-                                                {{-- <tr>
-                                                    <td colspan="4" class="text-center"> Data tidak ada</td>
-                                                </tr> --}}
+                                            @empty
+                                                <tr>
+                                                    <td colspan="5" class="text-center"> Data tidak ada</td>
+                                                </tr>
 
-                                                {{-- @endforelse --}}
+                                                @endforelse
 
 
                                             </tbody>
                                         </table>
 
                                         <div>
-                                            {{-- {{ $datas->links() }} --}}
+                                            {{ $datas->links() }}
                                         </div>
                                     </div>
 
