@@ -123,7 +123,7 @@
                     <div class="text-center">
                         <h3 class="mb-0 text-capitalize">Tentang <span class="fw-bold">Kami</span></h3>
                         <div class="main-title-border bg-primary  mx-auto"></div>
-                        <p class="text-secondary sec_subtitle mx-auto mt-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                        {{-- <p class="text-secondary sec_subtitle mx-auto mt-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p> --}}
                     </div>
                 </div>
             </div>
