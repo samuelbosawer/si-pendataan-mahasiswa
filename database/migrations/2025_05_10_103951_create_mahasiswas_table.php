@@ -30,6 +30,10 @@ return new class extends Migration
             $table->string('nama_ibu')->nullable();
             $table->string('pekerjaan_ibu')->nullable();
 
+            // verifikasi akun
+            $table->string('status')->nullable();
+            $table->string('keterangan')->nullable();
+
             $table->bigInteger('kampus_id')->nullable();
             $table->bigInteger('fakultas_id')->nullable();
             $table->bigInteger('jurusan_id')->nullable();

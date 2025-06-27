@@ -1,6 +1,6 @@
 @extends('admin.layout.tamplate')
 @section('title')
-    Mahasiswa - Admin
+    Mahasiswa
 @endsection
 @section('content')
     <!--  BEGIN CONTENT AREA  -->
@@ -32,10 +32,22 @@
                             <div class="widget-content widget-content-area">
 
                                 <div class="d-flex justify-content-between">
-                                    <div class="col-6">
-                                        <a href="{{ route('dashboard.mahasiswa.tambah') }}" class="btn btn-primary"> Tambah
-                                            Data </a>
-                                    </div>
+
+                                     @if (Auth::user()->hasRole('admin'))
+                                        <div class="col-6">
+                                            <a href="{{ route('dashboard.mahasiswa.tambah') }}" class="btn btn-primary"> Tambah
+                                                Data </a>
+                                        </div>
+                                     @endif
+
+
+
+                                     @if (Auth::user()->hasRole('ketua'))
+                                        <div class="col-6">
+                                            <a target="_blank" href="{{ route('dashboard.mahasiswa.pdf') }}" class="btn btn-danger"> Export PDF </a>
+                                        </div>
+                                     @endif
+
                                     <div class="col-6">
                                         @include('admin.layout.seraching')
                                     </div>
@@ -51,6 +63,7 @@
                                                 <th scope="col " class="text-light fw-bolder">Nama Mahasiswa</th>
                                                 <th scope="col " class="text-light fw-bolder">Angkatan</th>
                                                 <th scope="col " class="text-light fw-bolder">Kampus</th>
+                                                <th scope="col " class="text-light fw-bolder">Status</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -77,6 +90,9 @@
                                                 <td>
                                                     {{ $data->kampus->nama_kampus ?? ''}}
                                                 </td>
+                                                <td>
+                                                    {{ $data->status ?? ''}}
+                                                </td>
                                                 <td class="text-center">
                                                     <div class="action-btns">
                                                         <a href="{{route('dashboard.mahasiswa.detail',$data->id)}}" class="action-btn btn-view bs-tooltip me-2"
@@ -91,6 +107,9 @@
                                                                 <circle cx="12" cy="12" r="3"></circle>
                                                             </svg>
                                                         </a>
+
+
+                                                         @if (Auth::user()->hasRole('admin'))
                                                         <a href="{{route('dashboard.mahasiswa.ubah',$data->id)}}" class="action-btn btn-edit bs-tooltip me-2"
                                                             data-toggle="tooltip" data-placement="top" title="Ubah">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -135,6 +154,8 @@
 
 
                                                         </a>
+
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>

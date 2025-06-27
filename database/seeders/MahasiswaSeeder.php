@@ -44,6 +44,8 @@ class MahasiswaSeeder extends Seeder
                 'fakultas_id' => $fakultas->id,
                 'jurusan_id' => $jurusan->id,
                 'user_id' => $user->id,
+                'keterangan' => 'Data sudah lengkap dan akun sudah verifikasi',
+                'status' => 'Verifikasi',
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

@@ -12,20 +12,20 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use File;
 use RealRashid\SweetAlert\Facades\Alert;
+use Pdf;
 
 
 class MahasiswaController extends Controller
 {
     public function index(Request $request)
     {
-
-
     $datas = Mahasiswa::with(['kampus', 'fakultas', 'jurusan', 'user'])
         ->where(function ($query) use ($request) {
             if ($s = $request->s) {
                 $query->Where('angkatan', 'like', '%' . $s . '%')
                     ->orWhere('asal_kampung', 'like', '%' . $s . '%')
                     ->orWhere('alamat', 'like', '%' . $s . '%')
+                    ->orWhere('status', 'like', '%' . $s . '%')
 
                     ->orWhereHas('kampus', function ($q) use ($s) {
                         $q->where('nama_kampus', 'like', '%' . $s . '%');
@@ -45,6 +45,49 @@ class MahasiswaController extends Controller
         ->orderBy('id', 'desc')
         ->paginate(10);
         return view('admin.mahasiswa.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
+    }
+
+      public function pdf(Request $request)
+    {
+        // Base Query
+         $datas = Mahasiswa::with(['kampus', 'fakultas', 'jurusan', 'user'])
+        ->where(function ($query) use ($request) {
+            if ($s = $request->s) {
+                $query->Where('angkatan', 'like', '%' . $s . '%')
+                    ->orWhere('asal_kampung', 'like', '%' . $s . '%')
+                    ->orWhere('alamat', 'like', '%' . $s . '%')
+                    ->orWhere('status', 'like', '%' . $s . '%')
+
+                    ->orWhereHas('kampus', function ($q) use ($s) {
+                        $q->where('nama_kampus', 'like', '%' . $s . '%');
+                    })
+                    ->orWhereHas('fakultas', function ($q) use ($s) {
+                        $q->where('nama_fakultas', 'like', '%' . $s . '%');
+                    })
+                    ->orWhereHas('jurusan', function ($q) use ($s) {
+                        $q->where('nama_jurusan', 'like', '%' . $s . '%');
+                    })
+                    ->orWhereHas('user', function ($q) use ($s) {
+                        $q->where('nama', 'like', '%' . $s . '%')
+                            ->orWhere('jenis_kelamin', 'like', '%' . $s . '%');
+                    });
+            }
+        })
+        ->orderBy('id', 'desc')->get();
+
+        // Data dikirim ke view
+        $data = [
+        'title' => 'LAPORAN DATA MAHASISWA',
+        'datas' => $datas,
+        ];
+
+
+        // Buat PDF
+        $pdf = Pdf::loadView('admin.mahasiswa.pdf', $data);
+        $doc = 'informasi-data-mahasiswa.pdf';
+
+        // return $pdf->download($doc);
+        return $pdf->stream($doc); // Jika ingin menampilkan langsung di browser
     }
 
     public function create()
@@ -68,6 +111,7 @@ class MahasiswaController extends Controller
                 'nik' => 'required|unique:mahasiswas,nik|numeric',
                 // 'ktp' => 'required',
                 'jenis_kelamin' => 'required',
+                'status' => 'required',
 
                 'asal_kampung' => 'required',
                 'angkatan' => 'required',
@@ -86,6 +130,7 @@ class MahasiswaController extends Controller
                 'no_hp.required' => 'Tidak boleh kosong',
                 'no_hp.numeric' => 'Harus nomor/angka ',
 
+                'status.required' => 'Tidak boleh kosong',
 
                 'nik.unique' => 'Sudah terdaftar',
                 'nik.required' => 'Tidak boleh kosong',
@@ -142,6 +187,8 @@ class MahasiswaController extends Controller
         $data->nik   = $request->nik;
         $data->tanggal_lahir   = $request->tanggal_lahir;
         $data->tempat_lahir   = $request->tempat_lahir;
+        $data->status   = $request->status;
+        $data->keterangan   = $request->keterangan;
         $data->user_id   = $user->id;
 
          if (isset($request->ktp)) {
@@ -191,6 +238,7 @@ class MahasiswaController extends Controller
                 'jenis_kelamin' => 'required',
                 'asal_kampung' => 'required',
                 'angkatan' => 'required',
+                'status' => 'required',
                 'nama_ayah' => 'required',
                 'pekerjaan_ayah' => 'required',
                 'nama_ibu' => 'required',
@@ -206,6 +254,7 @@ class MahasiswaController extends Controller
                 'pekerjaan_ayah.required' => 'Tidak boleh kosong',
                 'nama_ibu.required' => 'Tidak boleh kosong',
                 'pekerjaan_ibu.required' => 'Tidak boleh kosong',
+                'status.required' => 'Tidak boleh kosong',
 
             ]
         );
@@ -247,6 +296,8 @@ class MahasiswaController extends Controller
         $data->pekerjaan_ibu   = $request->pekerjaan_ibu;
         $data->tanggal_lahir   = $request->tanggal_lahir;
         $data->tempat_lahir   = $request->tempat_lahir;
+         $data->status   = $request->status;
+        $data->keterangan   = $request->keterangan;
         if (isset($request->ktp)) {
             $fileName = $request->ktp->getClientOriginalName();
             $path = public_path('gambar/ktp/'. $data->ktp);

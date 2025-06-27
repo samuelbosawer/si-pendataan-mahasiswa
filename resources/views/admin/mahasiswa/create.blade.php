@@ -63,7 +63,7 @@
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email <span class="text-danger"> * </span>
                                     </label>
-                                    <input type="text" name="email" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah' ) disabled @endif
+                                    <input type="text" name="email" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah') disabled @endif
                                         value="{{ old('email') ?? ($data->user->email ?? '') }}" class="form-control"
                                         id="email">
                                     @if ($errors->has('email'))
@@ -75,7 +75,7 @@
                                 <div class="col-md-6">
                                     <label for="no_hp" class="form-label">No Hp <span class="text-danger"> * </span>
                                     </label>
-                                    <input type="text" name="no_hp" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah' )  disabled @endif
+                                    <input type="text" name="no_hp" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah') disabled @endif
                                         value="{{ old('no_hp') ?? ($data->user->no_hp ?? '') }}" class="form-control"
                                         id="no_hp">
                                     @if ($errors->has('no_hp'))
@@ -85,12 +85,11 @@
                                 </div>
 
 
-                                  <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label for="nik" class="form-label">NIK <span class="text-danger"> * </span>
                                     </label>
-                                    <input type="text" name="nik" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah' )  disabled @endif
-                                        value="{{ old('nik') ?? ($data->nik ?? '') }}" class="form-control"
-                                        id="nik">
+                                    <input type="text" name="nik" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah') disabled @endif
+                                        value="{{ old('nik') ?? ($data->nik ?? '') }}" class="form-control" id="nik">
                                     @if ($errors->has('nik'))
                                         <label class="text-danger"> {{ $errors->first('nik') }}
                                         </label>
@@ -122,24 +121,26 @@
                                     </div>
                                 </div>
 
-                                  <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label for="tempat_lahir" class="form-label">Tempat Lahir <span class="text-danger">
                                         </span> </label>
-                                    <input type="text" name="tempat_lahir" @if (Request::segment(3) == 'detail') disabled @endif
-                                        value="{{ old('tempat_lahir') ?? ($data->tempat_lahir ?? '') }}" class="form-control"
-                                        id="tempat_lahir">
+                                    <input type="text" name="tempat_lahir"
+                                        @if (Request::segment(3) == 'detail') disabled @endif
+                                        value="{{ old('tempat_lahir') ?? ($data->tempat_lahir ?? '') }}"
+                                        class="form-control" id="tempat_lahir">
                                     @if ($errors->has('tempat_lahir'))
                                         <label class="text-danger"> {{ $errors->first('tempat_lahir') }}
                                         </label>
                                     @endif
                                 </div>
 
-                                 <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span class="text-danger">
                                         </span> </label>
-                                    <input type="date" name="tanggal_lahir" @if (Request::segment(3) == 'detail') disabled @endif
-                                        value="{{ old('tanggal_lahir') ?? ($data->tanggal_lahir ?? '') }}" class="form-control"
-                                        id="tanggal_lahir">
+                                    <input type="date" name="tanggal_lahir"
+                                        @if (Request::segment(3) == 'detail') disabled @endif
+                                        value="{{ old('tanggal_lahir') ?? ($data->tanggal_lahir ?? '') }}"
+                                        class="form-control" id="tanggal_lahir">
                                     @if ($errors->has('tanggal_lahir'))
                                         <label class="text-danger"> {{ $errors->first('tanggal_lahir') }}
                                         </label>
@@ -352,7 +353,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
-                                        <label for="angkatan"> Tahun Angkatan <span class="text-danger"> *  </span></label>
+                                        <label for="angkatan"> Tahun Angkatan <span class="text-danger"> * </span></label>
 
                                         <select class="form-control" name="angkatan"
                                             @if (Request::segment(3) == 'detail') {{ 'disabled' }} @endif>
@@ -465,9 +466,9 @@
 
                                     @if (!empty($data->user->foto))
                                         <br>
-                                        <img src="{{ asset($data->user->foto) }}" alt="Foto" class="img-fluid mt-2 p-2 rounded"
-                                            style="max-height: 200px;">
-                                           <br>
+                                        <img src="{{ asset($data->user->foto) }}" alt="Foto"
+                                            class="img-fluid mt-2 p-2 rounded" style="max-height: 200px;">
+                                        <br>
                                     @endif
 
 
@@ -481,15 +482,15 @@
                                     @endif
                                 </div>
 
-                                    <div class="col-md-8">
+                                <div class="col-md-8">
                                     <label for="ktp" class="form-label">KTP <span class="text-danger"> </span>
                                     </label>
 
                                     @if (!empty($data->ktp))
                                         <br>
-                                        <img src="{{ asset($data->ktp) }}" alt="ktp" class="img-fluid mt-2 p-2 rounded"
-                                            style="max-height: 200px;">
-                                           <br>
+                                        <img src="{{ asset($data->ktp) }}" alt="ktp"
+                                            class="img-fluid mt-2 p-2 rounded" style="max-height: 200px;">
+                                        <br>
                                     @endif
 
 
@@ -700,47 +701,96 @@
 
 
                                 @if (Request::segment(3) == 'tambah')
-                                <div class="col-md-12 bg-dark rounded p-2 ">
-                                    <span class="text-white fw-bolder">Password Akun</span>
-                                </div>
+                                    <div class="col-md-12 bg-dark rounded p-2 ">
+                                        <span class="text-white fw-bolder">Password Akun</span>
+                                    </div>
 
-                                <div class="col-md-6">
-                                    <label for="password" class="form-label">Password <span class="text-danger"> *
-                                        </span> </label>
-                                    <input type="password" name="password"
-                                        @if (Request::segment(3) == 'detail') disabled @endif
-                                        value="" class="form-control"
-                                        id="password">
-                                    @if ($errors->has('password'))
-                                        <label class="text-danger"> {{ $errors->first('password') }}
+                                    <div class="col-md-6">
+                                        <label for="password" class="form-label">Password <span class="text-danger"> *
+                                            </span> </label>
+                                        <input type="password" name="password"
+                                            @if (Request::segment(3) == 'detail') disabled @endif value=""
+                                            class="form-control" id="password">
+                                        @if ($errors->has('password'))
+                                            <label class="text-danger"> {{ $errors->first('password') }}
+                                            </label>
+                                        @endif
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="password_confirmation" class="form-label">Ulangi Password <span
+                                                class="text-danger"> *
+                                            </span> </label>
+                                        <input type="password" name="password_confirmation"
+                                            @if (Request::segment(3) == 'detail') disabled @endif value=""
+                                            class="form-control" id="password_confirmation">
+                                        @if ($errors->has('password_confirmation'))
+                                            <label class="text-danger"> {{ $errors->first('password_confirmation') }}
+                                            </label>
+                                        @endif
+                                    </div>
+
+                                @endif
+
+
+                                    <div class="col-md-12 bg-dark rounded p-2 ">
+                                        <span class="text-white fw-bolder">Verifikas Akun</span>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-3">
+
+                                            <label for="status"> Status <span class="text-danger"> * </span>
+                                            </label>
+                                            <select class="form-control" aria-label="Default select example"
+                                                name="status"
+                                                @if (Request::segment(3) == 'detail') {{ 'disabled' }} @endif>
+                                                <option value="" hidden>Pilih Status
+                                                </option>
+                                                <option value="Verifikasi"
+                                                    {{ (old('status') ?? ($data->status ?? '')) == 'Verifikasi' ? 'selected' : '' }}>
+                                                    Verifikasi</option>
+                                                <option value="Belum Verifikasi"
+                                                    {{ (old('status') ?? ($data->status ?? '')) == 'Belum Verifikasi' ? 'selected' : '' }}>
+                                                    Belum Verifikasi</option>
+                                            </select>
+                                            @if ($errors->has('status'))
+                                                <label class="text-danger">
+                                                    {{ $errors->first('status') }}
+                                                </label>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+                                        <div class="col-md-12">
+                                    <div class="form-group mb-3">
+                                        <label for="keterangan"> Keterangan
                                         </label>
-                                    @endif
+                                        <textarea id="summernote" @if (Request::segment(3) == 'detail') disabled @endif name="keterangan"
+                                            placeholder="Masukan keterangan" rows="5" class="form-control">{{ old('keterangan') ?? ($data->keterangan ?? '') }} </textarea>
+
+                                        @if ($errors->has('keterangan'))
+                                            <label class="text-danger">
+                                                {{ $errors->first('keterangan') }}
+                                            </label>
+                                        @endif
+                                    </div>
                                 </div>
-
-
-                                  <div class="col-md-6">
-                                    <label for="password_confirmation" class="form-label">Ulangi Password <span class="text-danger"> *
-                                        </span> </label>
-                                    <input type="password" name="password_confirmation"
-                                        @if (Request::segment(3) == 'detail') disabled @endif
-                                        value="" class="form-control"
-                                        id="password_confirmation">
-                                    @if ($errors->has('password_confirmation'))
-                                        <label class="text-danger"> {{ $errors->first('password_confirmation') }}
-                                        </label>
-                                    @endif
-                                </div>
-
-                                 @endif
 
 
 
 
                                 <div class="col-md-12">
                                     @if (Request::segment(3) == 'detail')
-                                        <a href="{{ route('dashboard.mahasiswa.ubah', $data->id ?? 1) }}" class="btn btn-primary">
+
+                                     @if (Auth::user()->hasRole('admin'))
+                                        <a href="{{ route('dashboard.mahasiswa.ubah', $data->id ?? 1) }}"
+                                            class="btn btn-primary">
                                             Ubah
                                             Data</a>
+                                    @endif
                                         <a href="{{ route('dashboard.mahasiswa') }}" class="btn btn-success">
                                             Kembali</a>
                                     @else

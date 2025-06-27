@@ -7,6 +7,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::controller(MahasiswaController::class)->group(function(){
         Route::get('mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa');
+        Route::get('mahasiswa/pdf', [MahasiswaController::class, 'pdf'])->name('mahasiswa.pdf');
         Route::get('mahasiswa/tambah', [MahasiswaController::class, 'create'])->name('mahasiswa.tambah');
         Route::get('mahasiswa/detail/{id}', [MahasiswaController::class, 'show'])->name('mahasiswa.detail');
         Route::delete('mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.hapus');

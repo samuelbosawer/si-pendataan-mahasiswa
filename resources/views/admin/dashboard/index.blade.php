@@ -1,6 +1,6 @@
 @extends('admin.layout.tamplate')
 @section('title')
-    Dashboard - Admin
+    Dashboard
 @endsection
 @section('content')
     <!--  BEGIN CONTENT AREA  -->
@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="media-body">
                                     <p class="widget-text">Mahasiswa</p>
-                                    <p class="widget-numeric-value">3</p>
+                                    <p class="widget-numeric-value"> {{$mahasiswa}} </p>
                                 </div>
                             </div>
                             <div class="d-flex w-bottom text-center">
@@ -40,7 +40,10 @@
                                         <div class="dropdown-menu left" aria-labelledby="statistics"
                                             style="will-change: transform;">
                                             <a class="dropdown-item" href="{{route('dashboard.mahasiswa')}}">Lihat Data</a>
+
+                                             @if (Auth::user()->hasRole('admin'))
                                             <a class="dropdown-item" href="{{route('dashboard.mahasiswa.tambah')}}">Tambah Data</a>
+                                            @endif
 
                                         </div>
                                     </div>
@@ -49,6 +52,7 @@
                         </div>
                     </div>
 
+                                             @if (Auth::user()->hasRole('admin'))
 
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 layout-spacing">
                         <div class="widget widget-t-sales-widget widget-m-sales">
@@ -58,7 +62,7 @@
                                 </div>
                                 <div class="media-body">
                                     <p class="widget-text">Kampus</p>
-                                    <p class="widget-numeric-value">3</p>
+                                    <p class="widget-numeric-value">{{$kampus}}</p>
                                 </div>
                             </div>
                             <div class="d-flex w-bottom text-center">
@@ -97,7 +101,7 @@
                                 </div>
                                 <div class="media-body">
                                     <p class="widget-text">Fakultas</p>
-                                    <p class="widget-numeric-value">3</p>
+                                    <p class="widget-numeric-value">{{$fakultas}}</p>
                                 </div>
                             </div>
                             <div class="d-flex w-bottom text-center">
@@ -136,7 +140,7 @@
                                 </div>
                                 <div class="media-body">
                                     <p class="widget-text">Jurusan</p>
-                                    <p class="widget-numeric-value">3</p>
+                                    <p class="widget-numeric-value">{{$jurusan}}</p>
                                 </div>
                             </div>
                             <div class="d-flex w-bottom text-center">
@@ -167,6 +171,7 @@
                         </div>
                     </div>
 
+                @endif
 
 
 
