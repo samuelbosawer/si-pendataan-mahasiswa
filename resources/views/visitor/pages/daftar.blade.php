@@ -1,54 +1,64 @@
-@extends('admin.layout.tamplate')
-@section('title')
-    {{ $judul ?? 'Tambah Data Mahasiswa' }} - Admin
-@endsection
-@section('content')
-    <!--  BEGIN CONTENT AREA  -->
-    <div id="content" class="main-content">
-        <div class="layout-px-spacing">
-            <div class="middle-content container-xxl p-0">
-                <div class="row layout-top-spacing">
-                    @include('admin.layout.breadcumb')
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Daftar Akun </title>
+    <link rel="icon" type="image/x-icon" href="/src/assets/img/logo.svg"/>
+    <link href="/layouts/semi-dark-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <link href="/layouts/semi-dark-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
+    <script src="/layouts/semi-dark-menu/loader.js"></script>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-                    <div id="" class="col-lg-12 col-12 layout-spacing p-3">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-header">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4 class="fw-bolder ">
+    <link href="/layouts/semi-dark-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="/src/assets/css/light/authentication/auth-boxed.css" rel="stylesheet" type="text/css" />
 
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-users">
-                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                <circle cx="9" cy="7" r="4"></circle>
-                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                            </svg>
-                                            {{ $judul ?? 'Tambah Data Mahasiswa' }}
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
+    <link href="/layouts/semi-dark-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="/src/assets/css/dark/authentication/auth-boxed.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
 
+      <!-- Material Icon -->
+    <link rel="stylesheet" type="text/css" href="assets/css/materialdesignicons.min.css" />
 
-                            <div class="widget-content widget-content-area">
+</head>
+<body class="form">
 
-                                @if (Request::segment(4) == 'ubah')
-                                    <form action="{{ route('dashboard.mahasiswa.update', $data->id) }}" method="post"
-                                        enctype="multipart/form-data" class="row g-3">
-                                        @method('PUT')
-                                    @else
-                                        <form action="{{ route('dashboard.mahasiswa.store') }}" method="post"
-                                            enctype="multipart/form-data" class="row g-3">
-                                @endif
+    <!-- BEGIN LOADER -->
+    <div id="load_screen"> <div class="loader"> <div class="loader-content">
+        <div class="spinner-grow align-self-center"></div>
+    </div></div></div>
+    <!--  END LOADER -->
+
+    <div class="auth-container d-flex">
+
+        <div class="container mx-auto align-self-center">
+
+            <div class="row">
+
+                <div class="col-8 d-flex flex-column align-self-center mx-auto">
+                    <div class="card mt-3 mb-3">
+                        <div class="card-body">
+
+                            <form method="POST" action="{{ route('daftarStore') }}" enctype="multipart/form-data">
                                 @csrf
-                                <div class="col-md-12 bg-dark rounded p-2 ">
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3 text-center">
+
+                                    <h2 class="fw-bolder text-success">Buat Akun Baru</h2>
+                                    <p>Daftarkan diri anda sebagai bagian dari Komunitas Mahasiswa Pelajar Puncak</p>
+
+                                </div>
+
+
+                                <div class="p-2 col-md-12 bg-dark rounded p-2 ">
                                     <span class="text-white fw-bolder">Data Mahasiswa</span>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="p-2 col-md-12">
                                     <label for="nama" class="form-label">Nama Mahasiswa <span class="text-danger"> *
                                         </span> </label>
                                     <input type="text" name="nama" @if (Request::segment(3) == 'detail') disabled @endif
@@ -60,7 +70,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <label for="email" class="form-label">Email <span class="text-danger"> * </span>
                                     </label>
                                     <input type="text" name="email" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah') disabled @endif
@@ -72,7 +82,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <label for="no_hp" class="form-label">No Hp <span class="text-danger"> * </span>
                                     </label>
                                     <input type="text" name="no_hp" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah') disabled @endif
@@ -85,7 +95,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <label for="nik" class="form-label">NIK <span class="text-danger"> * </span>
                                     </label>
                                     <input type="text" name="nik" @if (Request::segment(3) == 'detail' || Request::segment(4) == 'ubah') disabled @endif
@@ -96,7 +106,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
 
                                         <label for="jenis_kelamin"> Jenis Kelamin <span class="text-danger"> * </span>
@@ -121,7 +131,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <label for="tempat_lahir" class="form-label">Tempat Lahir <span class="text-danger">
                                         </span> </label>
                                     <input type="text" name="tempat_lahir"
@@ -134,7 +144,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span class="text-danger">
                                         </span> </label>
                                     <input type="date" name="tanggal_lahir"
@@ -148,7 +158,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
 
                                         <label for="asal_kampung"> Asal Kampung <span class="text-danger"> * </span>
@@ -351,7 +361,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="angkatan"> Tahun Angkatan <span class="text-danger"> * </span></label>
 
@@ -377,7 +387,7 @@
 
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="kampus_id"> Kampus <span class="text-danger"> </span></label>
                                         <select class="form-control" name="kampus_id"
@@ -400,7 +410,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="fakultas_id"> Fakultas <span class="text-danger"> </span></label>
                                         <select class="form-control" name="fakultas_id"
@@ -422,7 +432,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="jurusan_id"> Jurusan <span class="text-danger"> </span></label>
                                         <select class="form-control" name="jurusan_id"
@@ -444,7 +454,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="p-2 col-md-12">
                                     <div class="form-group mb-3">
                                         <label for="alamat"> Alamat
                                         </label>
@@ -460,7 +470,7 @@
                                 </div>
 
 
-                                <div class="col-md-8">
+                                <div class="p-2 col-md-8">
                                     <label for="foto" class="form-label">Foto Diri <span class="text-danger"> </span>
                                     </label>
 
@@ -482,7 +492,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-8">
+                                <div class="p-2 col-md-8">
                                     <label for="ktp" class="form-label">KTP <span class="text-danger"> </span>
                                     </label>
 
@@ -504,12 +514,12 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-12 bg-dark rounded p-2 ">
+                                <div class="p-2 col-md-12 bg-dark rounded p-2 ">
                                     <span class="text-white fw-bolder">Data Orang Tua</span>
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <label for="nama_ayah" class="form-label">Nama Ayah <span class="text-danger"> *
                                         </span> </label>
                                     <input type="text" name="nama_ayah"
@@ -523,7 +533,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
 
                                         <label for="pekerjaan_ayah"> Pekerjaan Ayah <span class="text-danger"> * </span>
@@ -604,7 +614,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <label for="nama_ibu" class="form-label">Nama Ibu <span class="text-danger"> *
                                         </span> </label>
                                     <input type="text" name="nama_ibu"
@@ -618,7 +628,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="p-2 col-md-6">
                                     <div class="form-group mb-3">
 
                                         <label for="pekerjaan_ibu"> Pekerjaan Ibu <span class="text-danger"> * </span>
@@ -700,12 +710,12 @@
                                 </div>
 
 
-                                @if (Request::segment(3) == 'tambah')
-                                    <div class="col-md-12 bg-dark rounded p-2 ">
+
+                                    <div class="p-2 col-md-12 bg-dark rounded p-2 ">
                                         <span class="text-white fw-bolder">Password Akun</span>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="p-2 col-md-6">
                                         <label for="password" class="form-label">Password <span class="text-danger"> *
                                             </span> </label>
                                         <input type="password" name="password"
@@ -718,7 +728,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6">
+                                    <div class="p-2 col-md-6">
                                         <label for="password_confirmation" class="form-label">Ulangi Password <span
                                                 class="text-danger"> *
                                             </span> </label>
@@ -731,91 +741,42 @@
                                         @endif
                                     </div>
 
-                                @endif
 
 
-                                    <div class="col-md-12 bg-dark rounded p-2 ">
-                                        <span class="text-white fw-bolder">Verifikasi Akun</span>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group mb-3">
-
-                                            <label for="status"> Status <span class="text-danger"> * </span>
-                                            </label>
-                                            <select class="form-control" aria-label="Default select example"
-                                                name="status"
-                                                @if (Request::segment(3) == 'detail') {{ 'disabled' }} @endif>
-                                                <option value="" hidden>Pilih Status
-                                                </option>
-                                                <option value="Verifikasi"
-                                                    {{ (old('status') ?? ($data->status ?? '')) == 'Verifikasi' ? 'selected' : '' }}>
-                                                    Verifikasi</option>
-                                                <option value="Belum Verifikasi"
-                                                    {{ (old('status') ?? ($data->status ?? '')) == 'Belum Verifikasi' ? 'selected' : '' }}>
-                                                    Belum Verifikasi</option>
-                                            </select>
-                                            @if ($errors->has('status'))
-                                                <label class="text-danger">
-                                                    {{ $errors->first('status') }}
-                                                </label>
-                                            @endif
-                                        </div>
-                                    </div>
-
-
-                                        <div class="col-md-12">
-                                    <div class="form-group mb-3">
-                                        <label for="keterangan"> Keterangan
-                                        </label>
-                                        <textarea id="summernote" @if (Request::segment(3) == 'detail') disabled @endif name="keterangan"
-                                            placeholder="Masukan keterangan" rows="5" class="form-control">{{ old('keterangan') ?? ($data->keterangan ?? '') }} </textarea>
-
-                                        @if ($errors->has('keterangan'))
-                                            <label class="text-danger">
-                                                {{ $errors->first('keterangan') }}
-                                            </label>
-                                        @endif
+                                      <div class="col-12 text-center">
+                                    <div class="mb-4 mt-4">
+                                        <button class="btn btn-success w-50">Daftar <span class="mdi mdi-account-plus"></span></button>
                                     </div>
                                 </div>
 
 
 
 
-                                <div class="col-md-12">
-                                    @if (Request::segment(3) == 'detail')
-
-                                     @if (Auth::user()->hasRole('admin'))
-                                        <a href="{{ route('dashboard.mahasiswa.ubah', $data->id ?? 1) }}"
-                                            class="btn btn-primary">
-                                            Ubah
-                                            Data</a>
-                                    @endif
-                                        <a href="{{ route('dashboard.mahasiswa') }}" class="btn btn-success">
-                                            Kembali</a>
-                                    @else
-                                        <button class="btn btn-primary">Simpan </button>
-                                    @endif
-
-                                </div>
 
 
 
-                                </form>
+
 
 
 
 
                             </div>
-
-
+                          </form>
 
                         </div>
                     </div>
-
-
                 </div>
+
             </div>
 
         </div>
-    @endsection
+
+    </div>
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+
+</body>
+</html>

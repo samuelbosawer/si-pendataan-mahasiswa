@@ -81,7 +81,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="text-white text-center">
-                        {{-- <div class="mx-auto">
+                    {{-- <div class="mx-auto">
                             <button type="button" class="play-btn video_play mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="mdi mdi-play text-center"></i>
                             </button>

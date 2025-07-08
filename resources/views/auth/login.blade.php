@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>Masuk </title>
-    <link rel="icon" type="image/x-icon" href="/src/assets/img/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/src/assets/img/logo.svg"/>
     <link href="/layouts/semi-dark-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="/layouts/semi-dark-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="/layouts/semi-dark-menu/loader.js"></script>
@@ -46,7 +46,7 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3 text-center">
 
-                                    <h2 class="fw-bolder text-primary">Login</h2>
+                                    <h2 class="fw-bolder text-success">Login</h2>
                                     <p>Masukan email dan kata sandi Anda untuk dapat login</p>
 
                                 </div>
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <div class="form-check form-check-primary form-check-inline">
+                                        <div class="form-check form-check-success form-check-inline">
                                             <input class="form-check-input me-3" type="checkbox" id="form-check-default" name="remember" {{ old('remember') ? 'checked' : '' }}>
                                             <label class="form-check-label" for="form-check-default">
                                               Ingat Saya
@@ -89,7 +89,7 @@
 
                                 <div class="col-12">
                                     <div class="mb-4">
-                                        <button class="btn btn-primary w-100">Masuk</button>
+                                        <button class="btn btn-success w-100">Masuk</button>
                                     </div>
                                 </div>
 
@@ -97,7 +97,7 @@
 
                                 <div class="col-12">
                                     <div class="text-center">
-                                        <p class="mb-0">Belum Punya Akun ? <a href="/daftar" class="text-warning">Daftar</a></p>
+                                        <p class="mb-0">Belum Punya Akun ? <a href="/daftar" class="text-success">Daftar</a></p>
                                     </div>
                                 </div>
 

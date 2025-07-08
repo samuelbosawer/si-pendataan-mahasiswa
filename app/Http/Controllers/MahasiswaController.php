@@ -12,38 +12,45 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use File;
 use RealRashid\SweetAlert\Facades\Alert;
-use Pdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 
 class MahasiswaController extends Controller
 {
     public function index(Request $request)
     {
-    $datas = Mahasiswa::with(['kampus', 'fakultas', 'jurusan', 'user'])
-        ->where(function ($query) use ($request) {
-            if ($s = $request->s) {
-                $query->Where('angkatan', 'like', '%' . $s . '%')
-                    ->orWhere('asal_kampung', 'like', '%' . $s . '%')
-                    ->orWhere('alamat', 'like', '%' . $s . '%')
-                    ->orWhere('status', 'like', '%' . $s . '%')
 
-                    ->orWhereHas('kampus', function ($q) use ($s) {
-                        $q->where('nama_kampus', 'like', '%' . $s . '%');
-                    })
-                    ->orWhereHas('fakultas', function ($q) use ($s) {
-                        $q->where('nama_fakultas', 'like', '%' . $s . '%');
-                    })
-                    ->orWhereHas('jurusan', function ($q) use ($s) {
-                        $q->where('nama_jurusan', 'like', '%' . $s . '%');
-                    })
-                    ->orWhereHas('user', function ($q) use ($s) {
-                        $q->where('nama', 'like', '%' . $s . '%')
-                            ->orWhere('jenis_kelamin', 'like', '%' . $s . '%');
-                    });
-            }
-        })
-        ->orderBy('id', 'desc')
-        ->paginate(10);
+$datas = Mahasiswa::with(['kampus', 'fakultas', 'jurusan', 'user'])
+    ->where(function ($query) use ($request) {
+        if ($s = $request->s) {
+            $query->where('angkatan', 'like', '%' . $s . '%')
+                ->orWhere('asal_kampung', 'like', '%' . $s . '%')
+                ->orWhere('alamat', 'like', '%' . $s . '%')
+                ->orWhere('status', 'like', '%' . $s . '%')
+                ->orWhereHas('kampus', function ($q) use ($s) {
+                    $q->where('nama_kampus', 'like', '%' . $s . '%');
+                })
+                ->orWhereHas('fakultas', function ($q) use ($s) {
+                    $q->where('nama_fakultas', 'like', '%' . $s . '%');
+                })
+                ->orWhereHas('jurusan', function ($q) use ($s) {
+                    $q->where('nama_jurusan', 'like', '%' . $s . '%');
+                })
+                ->orWhereHas('user', function ($q) use ($s) {
+                    $q->where('nama', 'like', '%' . $s . '%')
+                        ->orWhere('jenis_kelamin', 'like', '%' . $s . '%');
+                });
+        }
+    })
+    // TAMBAH KONDISI BERDASARKAN ROLE DI SINI
+
+    ->when(Auth::user()->hasRole('mahasiswa') == 'true', function ($query) {
+        $query->where('user_id', Auth::id());
+    })
+    ->orderBy('id', 'desc')
+    ->paginate(10);
+
         return view('admin.mahasiswa.index',compact('datas'))->with('i',(request()->input('page', 1) - 1) * 10);
     }
 
@@ -137,7 +144,6 @@ class MahasiswaController extends Controller
                 'nik.numeric' => 'Harus nomor/angka ',
 
                 'jenis_kelamin.required' => 'Tidak boleh kosong',
-                // 'ktp.required' => 'Tidak boleh kosong',
                 'asal_kampung.required' => 'Tidak boleh kosong',
                 'angkatan.required' => 'Tidak boleh kosong',
                 'nama_ayah.required' => 'Tidak boleh kosong',
@@ -169,6 +175,8 @@ class MahasiswaController extends Controller
             $user->foto = 'gambar/mahasiswa/'.$timestamp.'-'.$fileName;
             $request->foto->move(public_path('gambar/mahasiswa/'), $timestamp.'-'.$fileName);
         }
+
+        $user->assignRole('mahasiswa');
 
         $user->save();
 
@@ -213,6 +221,9 @@ class MahasiswaController extends Controller
         $fakultas = Fakultas::get();
         $jurusan = Jurusan::get();
         $data = Mahasiswa::with('user')->where('id', $id)->first();
+        if(Auth::user()->hasRole('mahasiswa') == 'true'){
+          $data = Mahasiswa::with('user')->where('user_id',  Auth::id())->first();
+        }
         $judul = 'Detail Data Mahasiswa';
         return view('admin.mahasiswa.create',compact('kampus','fakultas','jurusan','data','judul'));
     }
@@ -225,6 +236,9 @@ class MahasiswaController extends Controller
         $jurusan = Jurusan::get();
         $data = Mahasiswa::with('user')->where('id', $id)->first();
         $judul = 'Ubah Data Mahasiswa';
+         if(Auth::user()->hasRole('mahasiswa') == 'true'){
+          $data = Mahasiswa::with('user')->where('user_id',  Auth::id())->first();
+        }
         return view('admin.mahasiswa.create',compact('kampus','fakultas','jurusan','data','judul'));
     }
 
